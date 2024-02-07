@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require "active_support"
+require "awesome_print"
+
+require_relative "../lib/pulls"
+require_relative "../lib/repository"
+require_relative "../lib/reviews"
+
+require_relative "../lib/formatter"
+
+repository = Repository.new(name: "venturehacks/wellfoundai")
+pulls = repository.pulls
+reviews = pulls.flat_map { Reviews.for(repository:, pull: _1) }
+
+puts Formatter.new(reviews).to_table
