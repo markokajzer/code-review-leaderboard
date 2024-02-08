@@ -1,8 +1,11 @@
 require "active_support/configurable"
+require "active_support/core_ext/module/delegation"
 
 require_relative "argument_parser"
 
-class Config
+module Config
+  extend self
+
   include ActiveSupport::Configurable
 
   ConfigurationError = Class.new(StandardError)
@@ -10,26 +13,22 @@ class Config
   config_accessor :access_token, :repository
   config_accessor :log_level, default: "info"
 
-  class << self
-    delegate :initialize!, to: :instance
-
-    def instance
-      @instance ||= new
-    end
-  end
-
   def initialize!
-    initialize_from_env!
     initialize_from_args!
-  end
-
-  def initialize_from_env!
-    self.access_token = ENV["ACCESS_TOKEN"]
-    self.repository = ENV["REPOSITORY"]
-    self.log_level = ENV["LOG_LEVEL"]
+    initialize_from_env!
   end
 
   def initialize_from_args!
-    ArgumentParser.parse!
+    options = ArgumentParser.parse!
+
+    self.access_token = options[:access_token]
+    self.repository = options[:repository]
+    self.log_level = options[:log_level]
+  end
+
+  def initialize_from_env!
+    self.access_token ||= ENV["ACCESS_TOKEN"]
+    self.repository ||= ENV["REPOSITORY"]
+    self.log_level ||= ENV["LOG_LEVEL"]
   end
 end
