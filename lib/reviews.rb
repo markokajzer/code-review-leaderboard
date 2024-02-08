@@ -13,7 +13,6 @@ class Reviews
     @since = since
   end
 
-  # Do not count comments if already otherwise reviewed
   def reviews
     puts "Fetching reviews for #{repository.name}##{pull.number}..." if Config.log_level == "debug"
 
@@ -23,6 +22,7 @@ class Reviews
         .uniq
         .partition { _1[:state] == :commented }
 
+    # Do not count comments if already otherwise reviewed
     comments.filter! do |commenter|
       reviews.none? { |reviewer| reviewer[:user] == commenter[:user] }
     end
