@@ -7,7 +7,7 @@ module Adapters
     delegate :pull_requests, :pull_request_reviews, to: :client
 
     def client
-      @client ||= Octokit::Client.new(access_token: ENV["ACCESS_TOKEN"])
+      @client ||= Octokit::Client.new(access_token: Config.access_token)
     end
   end
 end
