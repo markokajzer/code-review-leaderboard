@@ -33,9 +33,7 @@ class Reviews
 
   attr_reader :repository, :pull
 
-  delegate :client, to: Adapters::Github
-
   def fetch_reviews
-    client.pull_request_reviews(repository.name, pull.number)
+    Adapters::Github.pull_request_reviews(repository.name, pull.number)
   end
 end

@@ -1,4 +1,3 @@
-require "active_support/core_ext/module/delegation"
 require "active_support/core_ext/numeric/time"
 
 require_relative "adapters/github"
@@ -28,13 +27,11 @@ class Pulls
 
   attr_reader :repository, :since
 
-  delegate :client, :page_size, to: Adapters::Github
-
   def fetch_pulls
     (1..).each_with_object([]) do |page, pulls|
       puts "Page #{page}..." if Config.log_level == "debug"
 
-      pulls_chunk = client.pull_requests(repository.name, state: "all", sort: "updated", direction: "desc", per_page: PAGE_SIZE, page:)
+      pulls_chunk = Adapters::Github.pull_requests(repository.name, state: "all", sort: "updated", direction: "desc", per_page: PAGE_SIZE, page:)
       pulls.concat(pulls_chunk)
 
       return pulls if pulls_chunk.size < PAGE_SIZE
