@@ -3,7 +3,6 @@
 require "active_support"
 require "awesome_print"
 
-require_relative "../lib/argument_parser"
 require_relative "../lib/config"
 
 require_relative "../lib/pulls"
@@ -13,13 +12,13 @@ require_relative "../lib/reviews"
 require_relative "../lib/formatter"
 
 Config.initialize!
-ArgumentParser.parse!
 
 raise Config::ConfigurationError, "Access token is required" if Config.access_token.nil?
 raise Config::ConfigurationError, "Repository is required" if Config.repository.nil?
 
 repository = Repository.new(name: Config.repository)
-pulls = repository.pulls
-reviews = pulls.flat_map { Reviews.for(repository:, pull: _1) }
+reviews =
+  repository.pulls
+    .flat_map { Reviews.for(repository:, pull: _1) }
 
 puts Formatter.new(reviews).to_table
