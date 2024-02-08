@@ -19,8 +19,6 @@ class Pulls
   end
 
   def pulls
-    puts "Fetching pulls for #{repository.name}..." if Config.log_level == "debug"
-
     fetch_pulls
   end
 

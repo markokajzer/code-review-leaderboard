@@ -17,8 +17,17 @@ raise Config::ConfigurationError, "Access token is required" if Config.access_to
 raise Config::ConfigurationError, "Repository is required" if Config.repository.nil?
 
 repository = Repository.new(name: Config.repository)
+puts "Fetching pull requests for #{repository.name}..."
+
+pulls = repository.pulls
+puts "Found #{pulls.size} pull requests."
+
 reviews =
-  repository.pulls
-    .flat_map { Reviews.for(repository:, pull: _1) }
+  pulls.flat_map.with_index do |pull, index|
+    print "Fetching reviews for all pull requests... #{index + 1}/#{pulls.size}" + " " * 10 + "\r"
+
+    Reviews.for(repository:, pull:)
+  end
+puts "Found #{reviews.size} reviews."
 
 puts Formatter.new(reviews).to_table
