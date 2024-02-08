@@ -10,17 +10,9 @@ module ArgumentParser
       OptionParser.new do |opts|
         opts.banner = "Usage: leaderboard [options]"
 
-        opts.on("-t", "--access-token ACCESS_TOKEN", "Specify the access token") do |access_token|
-          Config.access_token = access_token
-        end
-
-        opts.on("-r", "--repo REPOSITORY", "--repository REPOSITORY", "Specify the repository") do |repository|
-          Config.repository = repository
-        end
-
-        opts.on("-v", "--verbose", "Run verbosely") do
-          Config.log_level = "debug"
-        end
+        opts.on("-t", "--access-token ACCESS_TOKEN", "Specify the access token") { |token| Config.access_token = token }
+        opts.on("-r", "--repo REPOSITORY", "--repository REPOSITORY", "Specify the repository") { |repository| Config.repository = repository }
+        opts.on("-v", "--verbose", "Run verbosely") { Config.log_level = "debug" }
 
         opts.on("-h", "--help", "Show this message") do
           puts opts
