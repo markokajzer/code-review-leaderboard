@@ -7,10 +7,10 @@ RSpec.describe Config do
         ArgumentParser.parse!(args: ["--access-token", "abc", "--repository", "rails/rails"])
       )
 
-      Config.initialize!
+      described_class.initialize!
 
-      expect(Config.access_token).to eq("abc")
-      expect(Config.repository).to eq("rails/rails")
+      expect(described_class.access_token).to eq("abc")
+      expect(described_class.repository).to eq("rails/rails")
     end
 
     it "can initialize from environment variables" do
@@ -18,10 +18,10 @@ RSpec.describe Config do
       allow(ENV).to receive(:[]).with("ACCESS_TOKEN").and_return("abc")
       allow(ENV).to receive(:[]).with("REPOSITORY").and_return("rails/rails")
 
-      Config.initialize!
+      described_class.initialize!
 
-      expect(Config.access_token).to eq("abc")
-      expect(Config.repository).to eq("rails/rails")
+      expect(described_class.access_token).to eq("abc")
+      expect(described_class.repository).to eq("rails/rails")
     end
   end
 end
