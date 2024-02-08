@@ -1,10 +1,11 @@
+require "active_support"
 require "active_support/core_ext/numeric/time"
 
 require_relative "adapters/github"
 require_relative "config"
 
 class Pulls
-  PAGE_SIZE = 100
+  PAGE_SIZE = 30
 
   class << self
     def for(repository:, since: 30.days.ago)

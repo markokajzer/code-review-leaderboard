@@ -96,6 +96,7 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 end
 
-if ENV["CI"].nil?
-  require "debug"
-end
+require "bundler"
+Bundler.require(:default, :test)
+
+require "webmock/rspec"
