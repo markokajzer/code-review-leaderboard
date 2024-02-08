@@ -3,13 +3,15 @@
 require "active_support"
 require "awesome_print"
 
+require_relative "../lib/config"
+
 require_relative "../lib/pulls"
 require_relative "../lib/repository"
 require_relative "../lib/reviews"
 
 require_relative "../lib/formatter"
 
-repository = Repository.new(name: "venturehacks/wellfoundai")
+repository = Repository.new(name: Config.repository_name)
 pulls = repository.pulls
 reviews = pulls.flat_map { Reviews.for(repository:, pull: _1) }
 

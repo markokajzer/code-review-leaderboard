@@ -1,3 +1,5 @@
+require_relative "config"
+
 class Reviews
   class << self
     def for(repository:, pull:)
@@ -12,7 +14,7 @@ class Reviews
 
   # Do not count comments if already otherwise reviewed
   def reviews
-    puts "Fetching reviews for #{repository.name}##{pull.number}..."
+    puts "Fetching reviews for #{repository.name}##{pull.number}..." if Config.log_level == "debug"
 
     comments, reviews =
       fetch_reviews
