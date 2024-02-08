@@ -10,7 +10,7 @@ RSpec.describe Config do
       described_class.initialize!
 
       expect(described_class.access_token).to eq("abc")
-      expect(described_class.repository).to eq("rails/rails")
+      expect(described_class.repositories).to contain_exactly("rails/rails")
     end
 
     it "can initialize from environment variables" do
@@ -21,7 +21,7 @@ RSpec.describe Config do
       described_class.initialize!
 
       expect(described_class.access_token).to eq("abc")
-      expect(described_class.repository).to eq("rails/rails")
+      expect(described_class.repositories).to contain_exactly("rails/rails")
     end
   end
 end

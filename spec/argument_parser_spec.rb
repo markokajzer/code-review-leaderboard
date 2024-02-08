@@ -10,11 +10,11 @@ RSpec.describe ArgumentParser do
   end
 
   it "sets the repository" do
-    expect(options[:repository]).to eq("rails/rails")
+    expect(options[:repositories]).to contain_exactly("rails/rails")
   end
 
   it "sets the log level" do
-    expect(options[:log_level]).to eq("debug")
+    expect(options[:log_level]).to eq(:debug)
   end
 
   # When this test is enabled, rspec randomly skips other specs...

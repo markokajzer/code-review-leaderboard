@@ -2,19 +2,18 @@ require_relative "config"
 
 class Reviews
   class << self
-    def for(repository:, pull:, since: 30.days.ago)
-      new(repository:, pull:, since:).reviews
+    def for(pull:, since: 30.days.ago)
+      new(pull:, since:).reviews
     end
   end
 
-  def initialize(repository:, pull:, since: 30.days.ago)
-    @repository = repository
+  def initialize(pull:, since: 30.days.ago)
     @pull = pull
     @since = since
   end
 
   def reviews
-    puts "Fetching reviews for #{repository.name}##{pull.number}..." if Config.log_level == "debug"
+    puts "Fetching reviews for #{repository}##{pull.number}..." if Config.log_level == :debug
 
     comments, reviews =
       fetch_reviews
@@ -32,10 +31,14 @@ class Reviews
 
   private
 
-  attr_reader :repository, :pull, :since
+  attr_reader :pull, :since
 
   def fetch_reviews
-    Adapters::Github.pull_request_reviews(repository.name, pull.number)
+    Adapters::Github.pull_request_reviews(repository, pull.number)
       .filter { _1.submitted_at > since }
+  end
+
+  def repository
+    pull.base.repo.full_name
   end
 end

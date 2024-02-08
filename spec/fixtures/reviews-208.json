@@ -3,6 +3,11 @@
     "user": {
       "login": "octocat"
     },
+    "base": {
+      "repo": {
+        "full_name": "rails/rails"
+      }
+    },
     "state": "APPROVED",
     "submitted_at": "2024-02-08T16:00:00Z"
   },
@@ -10,12 +15,22 @@
     "user": {
       "login": "defunkt"
     },
+    "base": {
+      "repo": {
+        "full_name": "rails/rails"
+      }
+    },
     "state": "COMMENTED",
     "submitted_at": "2024-02-08T14:00:00Z"
   },
   {
     "user": {
       "login": "octocat"
+    },
+    "base": {
+      "repo": {
+        "full_name": "rails/rails"
+      }
     },
     "state": "COMMENTED",
     "submitted_at": "2024-02-08T14:00:00Z"

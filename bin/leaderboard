@@ -11,22 +11,28 @@ require_relative "../lib/reviews"
 
 require_relative "../lib/formatter"
 
+
 Config.initialize!
 
 raise Config::ConfigurationError, "Access token is required" if Config.access_token.nil?
-raise Config::ConfigurationError, "Repository is required" if Config.repository.nil?
+raise Config::ConfigurationError, "Repository is required" if Config.repositories.empty?
 
-repository = Repository.new(name: Config.repository)
-puts "Fetching pull requests for #{repository.name}..."
+puts "Fetching pull requests..."
+puts "Fetching pull requests for #{Config.repositories}..." if Config.log_level == :debug
 
-pulls = repository.pulls
+pulls = Config.repositories.flat_map.with_index do |name, index|
+  puts "Fetching pull requests for #{name}... #{index + 1}/#{Config.repositories.size}" + " " * 10 + "\r" if Config.repositories.size > 1
+
+  Repository.new(name:).pulls
+end
+puts
 puts "Found #{pulls.size} pull requests."
 
 reviews =
   pulls.flat_map.with_index do |pull, index|
-    print "Fetching reviews for all pull requests... #{index + 1}/#{pulls.size}" + " " * 10 + "\r"
+    puts "Fetching reviews for all pull requests... #{index + 1}/#{pulls.size}" + " " * 10 + "\r"
 
-    Reviews.for(repository:, pull:)
+    Reviews.for(pull:)
   end
 puts "Found #{reviews.size} reviews."
 
