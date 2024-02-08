@@ -1,7 +1,7 @@
 require "argument_parser"
 
 RSpec.describe ArgumentParser do
-  subject(:options) { ArgumentParser.parse!(args: argv) }
+  subject(:options) { described_class.parse!(args: argv) }
 
   let(:argv) { ["--access-token", "abcd", "--repo", "rails/rails", "--verbose"] }
 
@@ -19,7 +19,7 @@ RSpec.describe ArgumentParser do
 
   # When this test is enabled, rspec randomly skips other specs...
   xit "shows the help message" do
-    expect { ArgumentParser.parse!(args: ["--help"]) }
+    expect { described_class.parse!(args: ["--help"]) }
       .to output("Show this message").to_stdout
   end
 end

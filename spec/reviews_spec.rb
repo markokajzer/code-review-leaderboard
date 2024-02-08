@@ -24,7 +24,7 @@ RSpec.describe Reviews, :github_mock do
     subject(:reviews) {}
 
     it "aggregates the reviews of a pull request" do
-      expect(Reviews.for(repository:, pull:))
+      expect(described_class.for(repository:, pull:))
         .to eq([
           {user: "octocat", state: :approved},
           {user: "defunkt", state: :commented}
@@ -32,14 +32,14 @@ RSpec.describe Reviews, :github_mock do
     end
 
     it "does not count comments if already reviewed" do
-      expect(Reviews.for(repository:, pull:))
+      expect(described_class.for(repository:, pull:))
         .not_to include({user: "octocat", state: :commented})
     end
 
     it "counts approvals and rejections of the same user" do
       pull = OpenStruct.new(number: 206)
 
-      expect(Reviews.for(repository:, pull:))
+      expect(described_class.for(repository:, pull:))
         .to eq([
           {user: "octocat", state: :approved},
           {user: "octocat", state: :changes_requested}

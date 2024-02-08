@@ -1,2 +1,5 @@
 parallel: true
 format: progress
+
+extend_config:
+  - .rubocop/rspec.yml

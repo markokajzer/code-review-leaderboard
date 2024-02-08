@@ -9,7 +9,8 @@ gem "terminal-table"
 
 group :development do
   gem "awesome_print"
-  gem "standard"
+  gem "standard", require: false
+  gem "rubocop-rspec", require: false
 end
 
 group :test do
