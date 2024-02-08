@@ -10,13 +10,21 @@ class Reviews
     @pull = pull
   end
 
-  # TODO: `COMMENTED` should either not count, or only count once
-  # if didn't otherwise review
+  # Do not count comments if already otherwise reviewed
   def reviews
     puts "Fetching reviews for #{repository.name}##{pull.number}..."
 
-    fetch_reviews
-      .map { {user: _1.user.login, state: _1.state.downcase.to_sym} }
+    comments, reviews =
+      fetch_reviews
+        .map { {user: _1.user.login, state: _1.state.downcase.to_sym} }
+        .uniq
+        .partition { _1[:state] == :commented }
+
+    comments.filter! do |commenter|
+      reviews.none? { |reviewer| reviewer[:user] == commenter[:user] }
+    end
+
+    reviews + comments
   end
 
   private
@@ -26,6 +34,6 @@ class Reviews
   delegate :client, to: Adapters::Github
 
   def fetch_reviews
-    @fetch_reviews ||= client.pull_request_reviews(repository.name, pull.number)
+    client.pull_request_reviews(repository.name, pull.number)
   end
 end
