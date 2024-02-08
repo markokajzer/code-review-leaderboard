@@ -2,26 +2,8 @@ require "pulls"
 
 require "repository"
 
-RSpec.describe Pulls do
+RSpec.describe Pulls, :github_mock do
   let(:repository) { Repository.new(name: "rails/rails") }
-
-  before do
-    stub_const("Pulls::PAGE_SIZE", 2)
-
-    stub_request(:get, "https://api.github.com/repos/#{repository.name}/pulls")
-      .with(query: hash_including({}))
-      .to_return_json(
-        {body: JSON.parse(File.read("spec/fixtures/pulls.json"))},
-        {body: JSON.parse(File.read("spec/fixtures/pulls-2.json"))},
-        {body: []}
-      )
-
-    Timecop.freeze(Date.new(2024, 2, 8))
-  end
-
-  after do
-    Timecop.return
-  end
 
   describe ".for" do
     it "returns the pulls of a repository" do
