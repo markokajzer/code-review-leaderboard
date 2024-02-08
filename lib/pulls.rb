@@ -20,7 +20,7 @@ class Pulls
   def pulls
     puts "Fetching pulls for #{repository.name}..." if Config.log_level == "debug"
 
-    fetch_pulls.filter { _1.updated_at > since }
+    fetch_pulls
   end
 
   private
@@ -31,11 +31,13 @@ class Pulls
     (1..).each_with_object([]) do |page, pulls|
       puts "Page #{page}..." if Config.log_level == "debug"
 
-      pulls_chunk = Adapters::Github.pull_requests(repository.name, state: "all", sort: "updated", direction: "desc", per_page: PAGE_SIZE, page:)
+      pulls_chunk =
+        Adapters::Github
+          .pull_requests(repository.name, state: "all", per_page: PAGE_SIZE, page:)
+          .filter { _1.created_at > since }
       pulls.concat(pulls_chunk)
 
       return pulls if pulls_chunk.size < PAGE_SIZE
-      return pulls if pulls_chunk.last.updated_at < since
     end
   end
 end

@@ -2,14 +2,15 @@ require_relative "config"
 
 class Reviews
   class << self
-    def for(repository:, pull:)
-      new(repository:, pull:).reviews
+    def for(repository:, pull:, since: 30.days.ago)
+      new(repository:, pull:, since:).reviews
     end
   end
 
-  def initialize(repository:, pull:)
+  def initialize(repository:, pull:, since: 30.days.ago)
     @repository = repository
     @pull = pull
+    @since = since
   end
 
   # Do not count comments if already otherwise reviewed
@@ -31,9 +32,10 @@ class Reviews
 
   private
 
-  attr_reader :repository, :pull
+  attr_reader :repository, :pull, :since
 
   def fetch_reviews
     Adapters::Github.pull_request_reviews(repository.name, pull.number)
+      .filter { _1.submitted_at > since }
   end
 end
