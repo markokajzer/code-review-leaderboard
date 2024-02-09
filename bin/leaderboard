@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
 
 require "active_support"
+require "active_support/core_ext/object/blank"
+
 require "whirly"
 
 require_relative "../lib/config"
 require_relative "../lib/spinner"
 
+require_relative "../lib/organization"
 require_relative "../lib/pulls"
 require_relative "../lib/repository"
 require_relative "../lib/reviews"
@@ -15,16 +18,25 @@ require_relative "../lib/formatter"
 Config.initialize!
 
 raise Config::ConfigurationError, "Access token is required" if Config.access_token.nil?
-raise Config::ConfigurationError, "Repository is required" if Config.repositories.empty?
+raise Config::ConfigurationError, "Repository or owner is required" if Config.repositories.empty? && Config.organization.blank?
 
-puts "Fetching pull requests for #{Config.repositories.join(", ")}..." if Config.repositories.size > 1
+repositories = if Config.repositories.present?
+  Config.repositories
+  puts "Fetching pull requests for #{repositories.join(", ")}..." if repositories.size > 1
+else
+  Spinner.start do
+    Spinner.status = "Fetching repos for #{Config.organization}..."
+    Organization.new(name: Config.organization).repos
+  end
+end
+puts "Found #{repositories.size} repositories" if Config.organization.present? && Config.log_level == :debug
 
 pulls = Spinner.start do
-  Config.repositories.flat_map.with_index do |name, index|
-    Whirly.status = if Config.repositories.one?
-      "Fetching pull requests..."
-    else
-      "Fetching pull requests #{name}... (#{index + 1}/#{Config.repositories.size})"
+  Spinner.status = "Fetching pull requests..." if repositories.one?
+
+  repositories.flat_map.with_index do |name, index|
+    unless repositories.one?
+      Spinner.status = "Fetching pull requests for #{name}... (#{index + 1}/#{repositories.size})"
     end
 
     Repository.new(name:).pulls

@@ -12,6 +12,7 @@ module Config
 
   config_accessor :access_token
   config_accessor :repositories, default: []
+  config_accessor :organization
   config_accessor :log_level, default: :info
 
   def initialize!
@@ -23,13 +24,15 @@ module Config
     options = ArgumentParser.parse!
 
     self.access_token = options[:access_token]
+    self.organization = options[:organization]
     self.repositories = options[:repositories] if options[:repositories].present?
     self.log_level = options[:log_level]
   end
 
   def initialize_from_env!
     self.access_token ||= ENV["ACCESS_TOKEN"]
-    self.repositories = repositories.presence || ENV["REPOSITORY"].split(",")
+    self.organization ||= ENV["ORGANIZATION"]
+    self.repositories = repositories.presence || ENV["REPOSITORY"].to_s.split(",")
     self.log_level ||= ENV["LOG_LEVEL"]
   end
 end

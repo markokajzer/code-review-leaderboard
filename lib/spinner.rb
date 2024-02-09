@@ -3,6 +3,8 @@ require "whirly"
 module Spinner
   extend self
 
+  delegate :status=, to: Whirly
+
   def start
     result = nil
 

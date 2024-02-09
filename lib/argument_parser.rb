@@ -10,6 +10,7 @@ module ArgumentParser
 
         opts.on("-t", "--access-token ACCESS_TOKEN", "Specify the access token") { |token| options[:access_token] = token }
         opts.on("-r", "--repo", "--repository repository,repository", Array, "Specify the repository") { |repositories| options[:repositories] = repositories }
+        opts.on("-o", "--org", "--organization organization", "Specify the organization") { |organization| options[:organization] = organization }
         opts.on("-v", "--verbose", "Run verbosely") { options[:log_level] = :debug }
 
         opts.on("-h", "--help", "Show this message") do
