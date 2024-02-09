@@ -10,4 +10,8 @@ class Repository
   def pulls
     Pulls.for(repository: self)
   end
+
+  def ==(other)
+    name == other.name
+  end
 end

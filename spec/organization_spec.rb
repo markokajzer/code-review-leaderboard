@@ -6,15 +6,15 @@ RSpec.describe Organization, :github_mock do
   describe "#repos" do
     it "returns a list of repositories" do
       expect(organization.repos).to eq([
-        "rails/rails",
-        "rails/thor",
-        "rails/jbuilder"
+        Repository.new(name: "rails/rails"),
+        Repository.new(name: "rails/thor"),
+        Repository.new(name: "rails/jbuilder")
       ])
     end
 
     it "considers timeframe" do
       expect(organization.repos(since: 1.week.ago))
-        .not_to include("rails/jbuilder")
+        .not_to include(Repository.new(name: "rails/jbuilder"))
     end
   end
 end

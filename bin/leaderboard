@@ -21,8 +21,7 @@ raise Config::ConfigurationError, "Access token is required" if Config.access_to
 raise Config::ConfigurationError, "Repository or owner is required" if Config.repositories.empty? && Config.organization.blank?
 
 repositories = if Config.repositories.present?
-  Config.repositories
-  puts "Fetching pull requests for #{repositories.join(", ")}..." if repositories.size > 1
+  Config.repositories.map { Repository.new(name: _1) }
 else
   Spinner.start do
     Spinner.status = "Fetching repos for #{Config.organization}..."
@@ -34,12 +33,12 @@ puts "Found #{repositories.size} repositories" if Config.organization.present? &
 pulls = Spinner.start do
   Spinner.status = "Fetching pull requests..." if repositories.one?
 
-  repositories.flat_map.with_index do |name, index|
+  repositories.flat_map.with_index do |repository, index|
     unless repositories.one?
-      Spinner.status = "Fetching pull requests for #{name}... (#{index + 1}/#{repositories.size})"
+      Spinner.status = "Fetching pull requests for #{repository.name}... (#{index + 1}/#{repositories.size})"
     end
 
-    Repository.new(name:).pulls
+    repository.pulls
   end
 end
 puts "Found #{pulls.size} pull requests."

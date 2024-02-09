@@ -3,6 +3,8 @@ require "active_support/core_ext/numeric/time"
 require_relative "adapters/github"
 require_relative "config"
 
+require_relative "repository"
+
 class Organization
   attr_reader :name
 
@@ -11,7 +13,7 @@ class Organization
   end
 
   def repos(since: 30.days.ago)
-    fetch_repos(since:).map(&:full_name)
+    fetch_repos(since:).map { Repository.new(name: _1.full_name) }
   end
 
   private
