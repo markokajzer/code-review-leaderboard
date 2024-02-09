@@ -1,5 +1,3 @@
-require "terminal-table"
-
 class Formatter
   def initialize(tally)
     @tally = tally

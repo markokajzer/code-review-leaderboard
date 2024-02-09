@@ -1,7 +1,5 @@
 require "active_support/core_ext/module/delegation"
 
-require "octokit"
-
 module Adapters
   module Github
     extend self

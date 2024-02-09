@@ -1,5 +1,3 @@
-require "whirly"
-
 module Spinner
   extend self
 

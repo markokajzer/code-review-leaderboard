@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require "active_support"
-require "active_support/core_ext/object/blank"
+require "bundler"
+Bundler.require(:default)
 
-require "whirly"
+require "active_support/core_ext/object/blank"
 
 require_relative "../lib/config"
 require_relative "../lib/spinner"
