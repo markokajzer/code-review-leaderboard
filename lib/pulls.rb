@@ -28,8 +28,6 @@ class Pulls
 
   def fetch_pulls
     (1..).each_with_object([]) do |page, pulls|
-      puts "Page #{page}..." if Config.log_level == :debug
-
       pulls_chunk =
         Adapters::Github
           .pull_requests(repository.name, state: "all", per_page: PAGE_SIZE, page:)

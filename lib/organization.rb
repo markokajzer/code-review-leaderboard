@@ -18,8 +18,6 @@ class Organization
 
   def fetch_repos(since:)
     (1..).each_with_object([]) do |page, repos|
-      puts "Page #{page}..." if Config.log_level == :debug
-
       repo_chunk =
         Adapters::Github
           .organization_repositories(name, type: "sources", sort: "pushed", page:)
