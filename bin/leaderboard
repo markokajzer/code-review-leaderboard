@@ -45,7 +45,7 @@ puts "Found #{pulls.size} pull requests."
 
 reviews = Spinner.start do
   pulls.flat_map.with_index do |pull, index|
-    Whirly.status = "Fetching reviews... (#{index + 1}/#{pulls.size})"
+    Spinner.status = "Fetching reviews... (#{index + 1}/#{pulls.size})"
 
     Reviews.for(pull:)
   end
