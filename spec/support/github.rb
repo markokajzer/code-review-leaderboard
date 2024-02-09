@@ -1,6 +1,6 @@
 RSpec.configure do |config|
   config.before(github_mock: true) do
-    stub_const("Pulls::PAGE_SIZE", 2)
+    stub_const("Pulls::PER_PAGE", 2)
 
     if defined?(repository)
       stub_request(:get, "https://api.github.com/repos/#{repository.name}/pulls")

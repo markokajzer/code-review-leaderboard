@@ -5,7 +5,7 @@ require_relative "adapters/github"
 require_relative "config"
 
 class Pulls
-  PAGE_SIZE = 100
+  PER_PAGE = 100
 
   class << self
     def for(repository:, since: 30.days.ago)
@@ -30,11 +30,11 @@ class Pulls
     (1..).each_with_object([]) do |page, pulls|
       pulls_chunk =
         Adapters::Github
-          .pull_requests(repository.name, state: "all", per_page: PAGE_SIZE, page:)
+          .pull_requests(repository.name, state: "all", per_page: PER_PAGE, page:)
           .filter { _1.created_at > since }
       pulls.concat(pulls_chunk)
 
-      return pulls if pulls_chunk.size < PAGE_SIZE
+      return pulls if pulls_chunk.size < PER_PAGE
     end
   end
 end
