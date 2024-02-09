@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 
 require "active_support"
-require "awesome_print"
+require "whirly"
 
 require_relative "../lib/config"
+require_relative "../lib/spinner"
 
 require_relative "../lib/pulls"
 require_relative "../lib/repository"
@@ -11,29 +12,34 @@ require_relative "../lib/reviews"
 
 require_relative "../lib/formatter"
 
-
 Config.initialize!
 
 raise Config::ConfigurationError, "Access token is required" if Config.access_token.nil?
 raise Config::ConfigurationError, "Repository is required" if Config.repositories.empty?
 
-puts "Fetching pull requests..."
-puts "Fetching pull requests for #{Config.repositories}..." if Config.log_level == :debug
+puts "Fetching pull requests for #{Config.repositories.join(", ")}..." if Config.repositories.size > 1
 
-pulls = Config.repositories.flat_map.with_index do |name, index|
-  puts "Fetching pull requests for #{name}... #{index + 1}/#{Config.repositories.size}" + " " * 10 + "\r" if Config.repositories.size > 1
+pulls = Spinner.start do
+  Config.repositories.flat_map.with_index do |name, index|
+    Whirly.status = if Config.repositories.one?
+      "Fetching pull requests..."
+    else
+      "Fetching pull requests #{name}... (#{index + 1}/#{Config.repositories.size})"
+    end
 
-  Repository.new(name:).pulls
+    Repository.new(name:).pulls
+  end
 end
-puts
 puts "Found #{pulls.size} pull requests."
 
-reviews =
+reviews = Spinner.start do
   pulls.flat_map.with_index do |pull, index|
-    puts "Fetching reviews for all pull requests... #{index + 1}/#{pulls.size}" + " " * 10 + "\r"
+    Whirly.status = "Fetching reviews... (#{index + 1}/#{pulls.size})"
 
     Reviews.for(pull:)
   end
+end
 puts "Found #{reviews.size} reviews."
+puts
 
 puts Formatter.new(reviews).to_table

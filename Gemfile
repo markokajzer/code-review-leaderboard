@@ -5,6 +5,12 @@ ruby "3.3.0"
 
 gem "octokit"
 gem "activesupport"
+
+# Progress
+gem "whirly"
+gem "paint"
+
+# Output
 gem "terminal-table"
 
 group :development do
