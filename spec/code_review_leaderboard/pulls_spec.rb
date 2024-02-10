@@ -1,9 +1,9 @@
-require "pulls"
+require "code_review_leaderboard/pulls"
 
-require "repository"
+require "code_review_leaderboard/repository"
 
-RSpec.describe Pulls, :github_mock do
-  let(:repository) { Repository.new(name: "rails/rails") }
+RSpec.describe CodeReviewLeaderboard::Pulls, :github_mock do
+  let(:repository) { CodeReviewLeaderboard::Repository.new(name: "rails/rails") }
 
   describe ".for" do
     it "returns the pulls of a repository" do

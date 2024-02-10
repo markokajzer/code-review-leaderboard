@@ -1,6 +1,6 @@
-require "argument_parser"
+require "code_review_leaderboard/argument_parser"
 
-RSpec.describe ArgumentParser do
+RSpec.describe CodeReviewLeaderboard::ArgumentParser do
   subject(:options) { described_class.parse!(args: argv) }
 
   let(:argv) { ["--access-token", "abcd", "--repo", "rails/rails", "--verbose"] }

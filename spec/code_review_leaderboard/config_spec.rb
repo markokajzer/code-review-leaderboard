@@ -1,10 +1,10 @@
-require "config"
+require "code_review_leaderboard/config"
 
-RSpec.describe Config do
+RSpec.describe CodeReviewLeaderboard::Config do
   describe ".initialize!" do
     it "can initialize from arguments" do
-      allow(ArgumentParser).to receive(:parse!).and_return(
-        ArgumentParser.parse!(args: ["--access-token", "abc", "--repository", "rails/rails"])
+      allow(CodeReviewLeaderboard::ArgumentParser).to receive(:parse!).and_return(
+        CodeReviewLeaderboard::ArgumentParser.parse!(args: ["--access-token", "abc", "--repository", "rails/rails"])
       )
 
       described_class.initialize!

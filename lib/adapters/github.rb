@@ -1,20 +1,25 @@
+require "active_support"
 require "active_support/core_ext/module/delegation"
 
-module Adapters
-  module Github
-    extend self
+require "octokit"
 
-    delegate :organization_repositories,
-      :pull_requests,
-      :pull_request_reviews,
-      to: :client
+module CodeReviewLeaderboard
+  module Adapters
+    module Github
+      extend self
 
-    def client
-      @client ||= Octokit::Client.new(access_token: Config.access_token)
-    end
+      delegate :organization_repositories,
+        :pull_requests,
+        :pull_request_reviews,
+        to: :client
 
-    def per_page
-      client.per_page || 30
+      def client
+        @client ||= Octokit::Client.new(access_token: Config.access_token)
+      end
+
+      def per_page
+        client.per_page || 30
+      end
     end
   end
 end

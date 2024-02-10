@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+base_path = File.expand_path("../lib", __dir__)
+$LOAD_PATH.unshift(base_path)
+
+require "active_support/core_ext/object/blank"
+
+require "code_review_leaderboard"
+
+CodeReviewLeaderboard.initialize!
+CodeReviewLeaderboard.start

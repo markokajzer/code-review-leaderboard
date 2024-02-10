@@ -1,3 +1,4 @@
+require "async"
 require "async/barrier"
 require "async/semaphore"
 

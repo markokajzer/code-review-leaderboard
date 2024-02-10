@@ -1,3 +1,15 @@
+PATH
+  remote: .
+  specs:
+    code_review_leaderboard (0.1.0)
+      activesupport
+      async
+      faraday-retry
+      octokit
+      paint
+      terminal-table
+      whirly
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -73,6 +85,7 @@ GEM
     public_suffix (5.0.4)
     racc (1.7.3)
     rainbow (3.1.1)
+    rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
     regexp_parser (2.8.3)
@@ -160,21 +173,16 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
-  async
   awesome_print
+  code_review_leaderboard!
   debug
-  faraday-retry
-  octokit
-  paint
+  rake (~> 13.0)
   rspec
   rubocop-rspec
   simplecov
   standard
-  terminal-table
   timecop
   webmock
-  whirly
 
 RUBY VERSION
    ruby 3.3.0p0

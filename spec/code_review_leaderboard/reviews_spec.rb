@@ -1,9 +1,9 @@
-require "reviews"
+require "code_review_leaderboard/reviews"
 
-require "repository"
+require "code_review_leaderboard/repository"
 
-RSpec.describe Reviews, :github_mock do
-  let(:repository) { Repository.new(name: "rails/rails") }
+RSpec.describe CodeReviewLeaderboard::Reviews, :github_mock do
+  let(:repository) { CodeReviewLeaderboard::Repository.new(name: "rails/rails") }
   let(:pull) { object_fixture("spec/fixtures/pull-208.json") }
 
   before do

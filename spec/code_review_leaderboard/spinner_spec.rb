@@ -1,6 +1,6 @@
-require "spinner"
+require "code_review_leaderboard/spinner"
 
-RSpec.describe Spinner do
+RSpec.describe CodeReviewLeaderboard::Spinner do
   before do
     allow(Whirly).to receive(:start).and_yield
   end

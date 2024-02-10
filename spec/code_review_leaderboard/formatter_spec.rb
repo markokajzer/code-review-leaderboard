@@ -1,6 +1,6 @@
-require "formatter"
+require "code_review_leaderboard/formatter"
 
-RSpec.describe Formatter do
+RSpec.describe CodeReviewLeaderboard::Formatter do
   subject(:formatter) { described_class.new(tally) }
 
   let(:tally) do

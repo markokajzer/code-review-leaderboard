@@ -1,8 +1,6 @@
-require "pulls"
+require "code_review_leaderboard/repository"
 
-require "repository"
-
-RSpec.describe Repository, :github_mock do
+RSpec.describe CodeReviewLeaderboard::Repository, :github_mock do
   describe "#pulls" do
     subject(:repository) { described_class.new(name: "rails/rails") }
 
