@@ -4,12 +4,17 @@ Create a leaderboard of code reviewers for your repository or organization.
 
 Find out who is the most active reviewer in your team, who is the most thorough, and who is the most critical.
 
-## Requirements
+## Examples
+
+<img width="762" alt="Screenshot 2024-02-10 at 20 57 55" src="https://github.com/markokajzer/code-review-leaderboard/assets/9379317/dcd84512-1372-4744-a45f-b9b076fcf6b7">
+
+> [!NOTE]
+> For a repository of 719 repositories and 529 reviews, the script takes roughly 1 minute.
 
 Reviews are counted by the following rules:
 1. Completed within the last 30 days
-2. If a reviewer both approves/rejects a pull request _and_ comments, the comments do not count extra.
-3. Multiple comments only count once.
+2. Multiple comments only count once.
+3. If a reviewer both approves/rejects a pull request _and_ comments, the comments do not count extra.
 4. Approvals and rejections always count.
 
 ## Installation
