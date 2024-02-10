@@ -29,17 +29,17 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "octokit"
-  spec.add_dependency "faraday-retry"
-  spec.add_dependency "activesupport"
-  spec.add_dependency "async"
+  spec.add_dependency "octokit", "~> 8.1"
+  spec.add_dependency "faraday-retry", "~> 2.2"
+  spec.add_dependency "activesupport", "~> 7.1"
+  spec.add_dependency "async", "~> 2.8"
 
   # Progress
-  spec.add_dependency "whirly"
-  spec.add_dependency "paint"
+  spec.add_dependency "whirly", "~> 0.3"
+  spec.add_dependency "paint", "~> 2.3"
 
   # Output
-  spec.add_dependency "terminal-table"
+  spec.add_dependency "terminal-table", "~> 3.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
