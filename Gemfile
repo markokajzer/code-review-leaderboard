@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.0"
 
 gem "octokit"
+gem "faraday-retry"
 gem "activesupport", require: "active_support"
 gem "async"
 
