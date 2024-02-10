@@ -5,6 +5,8 @@ Bundler.require(:default)
 
 require "active_support/core_ext/object/blank"
 
+require_relative "../lib/async/wait_all_throttled"
+
 require_relative "../lib/config"
 require_relative "../lib/spinner"
 
@@ -31,24 +33,16 @@ end
 puts "Found #{repositories.size} repositories" if Config.organization.present? && Config.log_level == :debug
 
 pulls = Spinner.start do
-  Spinner.status = "Fetching pull requests..." if repositories.one?
+  Spinner.status = "Fetching pull requests..."
 
-  repositories.flat_map.with_index do |repository, index|
-    unless repositories.one?
-      Spinner.status = "Fetching pull requests for #{repository.name}... (#{index + 1}/#{repositories.size})"
-    end
-
-    repository.pulls
-  end
+  WaitAllThrottled(repositories) { _1.pulls }
 end
 puts "Found #{pulls.size} pull requests."
 
 reviews = Spinner.start do
-  pulls.flat_map.with_index do |pull, index|
-    Spinner.status = "Fetching reviews... (#{index + 1}/#{pulls.size})"
+  Spinner.status = "Fetching reviews..."
 
-    Reviews.for(pull:)
-  end
+  WaitAllThrottled(pulls) { Reviews.for(pull: _1) }
 end
 puts "Found #{reviews.size} reviews."
 puts

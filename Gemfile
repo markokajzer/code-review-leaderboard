@@ -5,6 +5,7 @@ ruby "3.3.0"
 
 gem "octokit"
 gem "activesupport", require: "active_support"
+gem "async"
 
 # Progress
 gem "whirly"
