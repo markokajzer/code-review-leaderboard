@@ -6,16 +6,17 @@ Find out who is the most active reviewer in your team, who is the most thorough,
 
 ## Examples
 
-<img width="762" alt="Screenshot 2024-02-10 at 20 57 55" src="https://github.com/markokajzer/code-review-leaderboard/assets/9379317/dcd84512-1372-4744-a45f-b9b076fcf6b7">
-
-> [!NOTE]
-> For a repository of 719 repositories and 529 reviews, the script takes roughly 1 minute.
+<div align="center">
+  <img width="750" alt="Screenshot 2024-02-10 at 21 08 05" src="https://github.com/markokajzer/code-review-leaderboard/assets/9379317/4a774c51-5fc3-4c2d-bf0d-3d784dd4b04a">
+</div>
 
 Reviews are counted by the following rules:
 1. Completed within the last 30 days
 2. Multiple comments only count once.
 3. If a reviewer both approves/rejects a pull request _and_ comments, the comments do not count extra.
 4. Approvals and rejections always count.
+
+For a repository of 718 repositories and 526 reviews, the script takes roughly 1 minute.
 
 ## Installation
 
