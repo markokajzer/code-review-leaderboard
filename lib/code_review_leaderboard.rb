@@ -21,11 +21,6 @@ module CodeReviewLeaderboard
   end
 
   def start
-    puts "Found #{repositories.size} repositories" if Config.organization.present? && Config.log_level == :debug
-    puts "Found #{pulls.size} pull requests."
-    puts "Found #{reviews.size} reviews."
-    puts
-
     puts Formatter.new(reviews).to_table
   end
 
@@ -38,6 +33,7 @@ module CodeReviewLeaderboard
       Spinner.start do
         Spinner.status = "Fetching repos for #{Config.organization}..."
         Organization.new(name: Config.organization).repos
+          .tap { Spinner.status = "Found #{_1.size} repositories." }
       end
     end
   end
@@ -51,14 +47,19 @@ module CodeReviewLeaderboard
       Spinner.status = "Fetching pull requests..."
 
       WaitAllThrottled(repositories) { _1.pulls }
+        .tap { Spinner.status = "Found #{_1.size} pull requests." }
     end
   end
+  alias_method :load_pulls, :pulls
 
   def reviews
+    load_pulls
+
     @@reviews ||= Spinner.start do
       Spinner.status = "Fetching reviews..."
 
       WaitAllThrottled(pulls) { Reviews.for(pull: _1) }
+        .tap { Spinner.status = "Found #{_1.size} reviews.\n" }
     end
   end
 end
