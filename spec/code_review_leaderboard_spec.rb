@@ -41,12 +41,6 @@ RSpec.describe CodeReviewLeaderboard do
       CodeReviewLeaderboard::Config.access_token = "token"
     end
 
-    after do
-      described_class.class_variables.each do |variable|
-        described_class.class_variable_set(variable, nil)
-      end
-    end
-
     context "with repository" do
       let(:repository) { CodeReviewLeaderboard::Repository.new(name: "rails/rails") }
 
