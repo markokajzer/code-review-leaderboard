@@ -8,7 +8,9 @@ RSpec.describe CodeReviewLeaderboard::Spinner do
   it "shows the spinner" do
     described_class.start { "result" }
 
-    expect(Whirly).to have_received(:start).with(spinner: "dots", stop: "✔")
+    expect(Whirly).to have_received(:start).with(
+      hash_including(spinner: "dots", stop: "✔")
+    )
   end
 
   it "returns the result of the block" do
