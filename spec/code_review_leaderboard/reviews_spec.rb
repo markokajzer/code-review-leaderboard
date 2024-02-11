@@ -6,20 +6,6 @@ RSpec.describe CodeReviewLeaderboard::Reviews, :github_mock do
   let(:repository) { CodeReviewLeaderboard::Repository.new(name: "rails/rails") }
   let(:pull) { object_fixture("spec/fixtures/pull-208.json") }
 
-  before do
-    Timecop.freeze(Date.new(2024, 2, 8))
-
-    [208, 206].each do |number|
-      stub_request(:get, "https://api.github.com/repos/#{repository.name}/pulls/#{number}/reviews")
-        .with(query: hash_including({}))
-        .to_return_json(body: JSON.parse(File.read("spec/fixtures/reviews-#{number}.json")))
-    end
-  end
-
-  after do
-    Timecop.return
-  end
-
   describe ".for" do
     it "aggregates the reviews of a pull request" do
       expect(described_class.for(pull:))

@@ -16,7 +16,7 @@ module CodeReviewLeaderboard
   def initialize!
     Config.initialize!
 
-    raise ConfigurationError, "Access token is required" if Config.access_token.nil?
+    raise ConfigurationError, "Access token is required" if Config.access_token.blank?
     raise ConfigurationError, "Repository or owner is required" if Config.repositories.empty? && Config.organization.blank?
   end
 

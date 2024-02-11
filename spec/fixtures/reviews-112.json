@@ -1,0 +1,23 @@
+[
+  {
+    "user": {
+      "login": "octocat"
+    },
+    "state": "COMMENTED",
+    "submitted_at": "2024-01-12T12:00:00Z"
+  },
+  {
+    "user": {
+      "login": "markokajzer"
+    },
+    "state": "COMMENTED",
+    "submitted_at": "2024-01-12T13:00:00Z"
+  },
+  {
+    "user": {
+      "login": "markokajzer"
+    },
+    "state": "APPROVED",
+    "submitted_at": "2024-01-13T12:00:00Z"
+  }
+]
