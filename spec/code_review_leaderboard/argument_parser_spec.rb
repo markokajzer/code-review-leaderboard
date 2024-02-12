@@ -17,9 +17,17 @@ RSpec.describe CodeReviewLeaderboard::ArgumentParser do
     expect(options[:log_level]).to eq(:debug)
   end
 
+  it "shows version information" do
+    stub_const("CodeReviewLeaderboard::VERSION", "0.1.1")
+
+    expect { described_class.parse!(args: ["--version"]) }
+      .to output(/0.1.1/).to_stdout
+      .and raise_error(SystemExit)
+  end
+
   it "shows the help message" do
     expect { described_class.parse!(args: ["--help"]) }
-      .to raise_error(SystemExit)
-      .and output(/Show this message/).to_stdout
+      .to output(/Show this message/).to_stdout
+      .and raise_error(SystemExit)
   end
 end
