@@ -26,19 +26,20 @@ GEM
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
-    async (2.8.1)
+    async (2.10.1)
       console (~> 1.10)
       fiber-annotation
-      io-event (~> 1.1)
+      io-event (~> 1.5, >= 1.5.1)
       timers (~> 4.1)
     awesome_print (1.9.2)
     base64 (0.2.0)
     bigdecimal (3.1.6)
     concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
-    console (1.23.3)
+    console (1.23.6)
       fiber-annotation
       fiber-local
+      json
     crack (1.0.0)
       bigdecimal
       rexml
@@ -61,7 +62,7 @@ GEM
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
-    io-event (1.4.3)
+    io-event (1.5.1)
     irb (1.11.2)
       rdoc
       reline (>= 0.4.2)
