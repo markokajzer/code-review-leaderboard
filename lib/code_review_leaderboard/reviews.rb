@@ -36,6 +36,7 @@ module CodeReviewLeaderboard
 
     def fetch_reviews
       Adapters::Github.pull_request_reviews(repository, pull.number)
+        .reject { _1.state == "PENDING" }
         .filter { _1.submitted_at > since }
     end
 
