@@ -1,3 +1,5 @@
+require "ostruct"
+
 module FileFixture
   def json_fixture(path)
     JSON.parse(File.read(path))
