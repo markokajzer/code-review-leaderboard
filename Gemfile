@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.0"
+ruby "3.3.6"
 
 # Specify your gem's dependencies in code_review_leaderboard.gemspec
 gemspec
