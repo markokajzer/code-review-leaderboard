@@ -98,7 +98,7 @@ GEM
     public_suffix (6.0.1)
     racc (1.8.1)
     rainbow (3.1.1)
-    rake (13.2.1)
+    rake (13.3.0)
     rdoc (6.10.0)
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
@@ -187,7 +187,7 @@ DEPENDENCIES
   awesome_print
   code_review_leaderboard!
   debug
-  rake (~> 13.2)
+  rake (~> 13.3)
   rspec
   rubocop-rspec
   simplecov
