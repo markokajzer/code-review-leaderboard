@@ -9,7 +9,7 @@ ruby "3.3.6"
 gemspec
 
 group :development do
-  gem "rake", "~> 13.2"
+  gem "rake", "~> 13.3"
 
   gem "awesome_print"
   gem "standard", require: false
