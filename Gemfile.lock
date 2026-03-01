@@ -176,7 +176,8 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    whirly (0.3.0)
+    whirly (0.4.0)
+      json
       unicode-display_width (>= 1.1)
 
 PLATFORMS
